@@ -120,6 +120,6 @@ public class ColorWheelPicker : MonoBehaviour, IPointerDownHandler, IDragHandler
     {
         Color color = Color.HSVToRGB(_hue, _saturation, _value);
         if (previewSwatch != null) previewSwatch.color = color;
-        DrawingCanvas.Instance?.SetBrushColor(color);
+        ActiveCanvas.Current?.SetBrushColor(color);
     }
 }

@@ -17,6 +17,6 @@ public class ColorSwatchButton : MonoBehaviour
     /// <summary>Wire this to the button's OnClick().</summary>
     public void SelectColor()
     {
-        DrawingCanvas.Instance?.SetBrushColor(swatchColor);
+        ActiveCanvas.Current?.SetBrushColor(swatchColor);
     }
 }
