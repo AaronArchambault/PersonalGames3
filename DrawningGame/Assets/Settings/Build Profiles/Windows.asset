@@ -35,6 +35,24 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/Scenes/WhiteBoardSolo.unity
     m_guid: 3c2de05a8a5fd4c45b3aac329c8281fe
+  - m_enabled: 1
+    m_path: Assets/Scenes/TelephoneAnimation.unity
+    m_guid: 3cf1faebfd307164aa8421e31e3697f1
+  - m_enabled: 1
+    m_path: Assets/Scenes/TelephoneKncokOff.unity
+    m_guid: 65fb014c2d953174cb190df89888e8da
+  - m_enabled: 1
+    m_path: Assets/Scenes/TelephoneExquisiteCorpse.unity
+    m_guid: a4055049a37141948b4c5205039fe8d6
+  - m_enabled: 1
+    m_path: Assets/Scenes/TelephoneComplement.unity
+    m_guid: 94f0f3a8993bd9c4aab7d88cb6cd38c8
+  - m_enabled: 1
+    m_path: Assets/Scenes/TelephoneStory.unity
+    m_guid: ae6d3d526c08ad54fbb8803b9d176f51
+  - m_enabled: 1
+    m_path: Assets/Scenes/TelephoneMissingPiece.unity
+    m_guid: b466d0c43c542234fa4d5a5c4887f76d
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:

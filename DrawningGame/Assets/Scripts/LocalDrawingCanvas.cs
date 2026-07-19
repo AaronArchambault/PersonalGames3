@@ -82,10 +82,12 @@ public class LocalDrawingCanvas : MonoBehaviour, IPointerDownHandler, IPointerUp
     /// <summary>Exports the current canvas as PNG bytes (e.g. to submit a Telephone drawing).</summary>
     public byte[] GetPngBytes() => _texture.EncodeToPNG();
 
-    /// <summary>Loads a reference image onto the canvas (e.g. to show what to caption). Not used mid-drawing.</summary>
+    /// <summary>Loads a starting image onto the canvas (e.g. the previous frame to trace over, or a reference to caption). Resets undo/redo history.</summary>
     public void LoadFromPng(byte[] pngData)
     {
         _texture.LoadImage(pngData);
+        _undoStack.Clear();
+        _redoStack.Clear();
     }
 
     private Color EffectiveColor => currentTool == ToolType.Eraser

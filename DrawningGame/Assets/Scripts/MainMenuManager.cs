@@ -4,21 +4,34 @@ using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Wire this up in your Main Menu scene. Each mode button calls one of the
-/// public methods below. Networked modes (Skribbl, Telephone, Whiteboard-Multiplayer)
-/// start hosting/joining and then load the target scene for everyone. Solo Whiteboard
-/// just loads a scene directly with no networking involved.
+/// public methods below. Networked modes start hosting/joining and then load
+/// the target scene for everyone. Solo Whiteboard just loads a scene directly
+/// with no networking involved.
 ///
-/// SCENE SETUP: add MainMenu, Skribbl, Telephone, WhiteboardSolo, and
-/// WhiteboardMultiplayer scenes to File -> Build Settings -> Scenes In Build.
-/// Exact names below must match your actual scene names.
+/// SCENE SETUP: add every scene listed below to
+/// File -> Build Settings -> Scenes In Build. Exact names must match your
+/// actual scene names.
+///
+/// Note: Animation, Exquisite Corpse, Complement, Story, Missing Piece, and
+/// Knock-Off are all the SAME underlying scripts as Telephone (TelephoneGameManager
+/// + TelephoneUIManager) just with different Inspector settings per scene —
+/// see SETUP_GUIDE.md section 14 for exactly what to change in each duplicated scene.
 /// </summary>
 public class MainMenuManager : MonoBehaviour
 {
-    [Header("Scene names (must match Build Settings exactly)")]
+    [Header("Core scenes")]
     [SerializeField] private string skribblSceneName = "SkribblGame";
-    [SerializeField] private string telephoneSceneName = "TelephoneGame";
     [SerializeField] private string whiteboardSoloSceneName = "WhiteboardSolo";
     [SerializeField] private string whiteboardMultiplayerSceneName = "WhiteboardMultiplayer";
+
+    [Header("Telephone family scenes (all use TelephoneGameManager, different FlowMode per scene)")]
+    [SerializeField] private string classicTelephoneSceneName = "TelephoneClassic";
+    [SerializeField] private string knockOffSceneName = "TelephoneKnockOff";
+    [SerializeField] private string animationSceneName = "TelephoneAnimation";
+    [SerializeField] private string exquisiteCorpseSceneName = "TelephoneExquisiteCorpse";
+    [SerializeField] private string complementSceneName = "TelephoneComplement";
+    [SerializeField] private string storySceneName = "TelephoneStory";
+    [SerializeField] private string missingPieceSceneName = "TelephoneMissingPiece";
 
     [Header("Join settings")]
     [SerializeField] private string joinAddress = "127.0.0.1";
@@ -28,14 +41,16 @@ public class MainMenuManager : MonoBehaviour
 
     // ---------- Mode buttons ----------
 
-    /// <summary>Wire to "Host Skribbl" button.</summary>
     public void HostSkribbl() => HostAndLoad(skribblSceneName);
-
-    /// <summary>Wire to "Host Telephone" button.</summary>
-    public void HostTelephone() => HostAndLoad(telephoneSceneName);
-
-    /// <summary>Wire to "Host Multiplayer Whiteboard" button.</summary>
     public void HostWhiteboardMultiplayer() => HostAndLoad(whiteboardMultiplayerSceneName);
+
+    public void HostTelephoneClassic() => HostAndLoad(classicTelephoneSceneName);
+    public void HostTelephoneKnockOff() => HostAndLoad(knockOffSceneName);
+    public void HostTelephoneAnimation() => HostAndLoad(animationSceneName);
+    public void HostTelephoneExquisiteCorpse() => HostAndLoad(exquisiteCorpseSceneName);
+    public void HostTelephoneComplement() => HostAndLoad(complementSceneName);
+    public void HostTelephoneStory() => HostAndLoad(storySceneName);
+    public void HostTelephoneMissingPiece() => HostAndLoad(missingPieceSceneName);
 
     /// <summary>Wire to "Join" button — joins whatever scene the host already started.</summary>
     public void JoinGame()
@@ -44,8 +59,8 @@ public class MainMenuManager : MonoBehaviour
         if (transport != null) transport.SetConnectionData(joinAddress, port);
 
         NetworkManager.Singleton.StartClient();
-        // No manual scene load needed here — Netcode's scene management (enabled on
-        // your NetworkManager) automatically syncs the client to whatever scene the host is in.
+        // No manual scene load needed — Netcode's scene management automatically
+        // syncs the client to whatever scene the host is currently in.
     }
 
     /// <summary>Wire to "Solo Whiteboard" button — no networking at all.</summary>
@@ -65,7 +80,6 @@ public class MainMenuManager : MonoBehaviour
             Debug.LogError("Failed to start host.");
             return;
         }
-        // Wait one frame so the NetworkManager is fully initialized before loading a scene.
         Invoke(nameof(LoadPendingScene), 0.1f);
     }
 
